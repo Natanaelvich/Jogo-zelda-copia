@@ -3,7 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/projeto_jogocopia_zelda/PROJETO_JogoCopia_Zelda.java</file>
+            <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/main/Game.java</file>
+            <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/entites/Entity.java</file>
+            <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/entites/Player.java</file>
+            <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/graficos/Spritesheet.java</file>
         </group>
     </open-files>
 </project-private>
