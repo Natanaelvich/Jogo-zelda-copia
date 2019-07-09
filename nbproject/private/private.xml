@@ -5,8 +5,12 @@
         <group>
             <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/main/Game.java</file>
             <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/entites/Entity.java</file>
+            <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/wolrd/World.java</file>
+            <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/wolrd/Tile_wall.java</file>
             <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/entites/Player.java</file>
             <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/graficos/Spritesheet.java</file>
+            <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/wolrd/Tile_Florr.java</file>
+            <file>file:/C:/Users/Natanael/Documents/NetBeansProjects/PROJETO_JogoCopia_Zelda/src/com/natanaelvich/wolrd/Tile.java</file>
         </group>
     </open-files>
 </project-private>

@@ -8,6 +8,7 @@ package com.natanaelvich.main;
 import com.natanaelvich.entites.Entity;
 import com.natanaelvich.entites.Player;
 import com.natanaelvich.graficos.Spritesheet;
+import com.natanaelvich.wolrd.World;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,12 +36,14 @@ public class Game extends Canvas implements Runnable,KeyListener {
     private BufferedImage image;
     public static Spritesheet spritesheet;
     private Player player;
+    public static World world;
    
     public Game(){  
     addKeyListener(this);
     this.setPreferredSize(new Dimension(w*scale, h*scale));
     initFrame();
     //inicializando objetos
+    world = new World("/map.png");
     image  = new BufferedImage(w, h,BufferedImage.TYPE_INT_RGB);
     entitys = new ArrayList<Entity>();
     spritesheet = new Spritesheet("/spritesheet.png");
@@ -91,10 +94,11 @@ public class Game extends Canvas implements Runnable,KeyListener {
         return;
         }
         Graphics g  = image.getGraphics();
-        g.setColor(new Color(0, 255, 0));
+        g.setColor(new Color(0, 0, 0));
         g.fillRect(0, 0, w, h);
         
        //rederização do jogo
+       world.render(g);
         for(int i=0;i<entitys.size();i++){
         Entity e  = entitys.get(i);
          e.render(g);
