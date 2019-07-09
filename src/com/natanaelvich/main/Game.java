@@ -12,7 +12,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable,KeyListener {
 
     private static final long serialVersionUID = 1l;
     public final int w = 240;
@@ -32,16 +33,19 @@ public class Game extends Canvas implements Runnable {
     private boolean isRunning = true;
     public List<Entity> entitys;
     private BufferedImage image;
-    public Spritesheet spritesheet;
+    public static Spritesheet spritesheet;
+    private Player player;
    
-    public Game(){        
+    public Game(){  
+    addKeyListener(this);
     this.setPreferredSize(new Dimension(w*scale, h*scale));
     initFrame();
     //inicializando objetos
     image  = new BufferedImage(w, h,BufferedImage.TYPE_INT_RGB);
     entitys = new ArrayList<Entity>();
     spritesheet = new Spritesheet("/spritesheet.png");
-    entitys.add( new Player(0,0,16,16,spritesheet.getSprite(32, 0, 16, 16)));
+    player = new Player(0,0,16,16,spritesheet.getSprite(32, 0, 16, 16));
+    entitys.add(player);
     
    
     }
@@ -87,11 +91,10 @@ public class Game extends Canvas implements Runnable {
         return;
         }
         Graphics g  = image.getGraphics();
-        g.setColor(new Color(0, 0, 0));
+        g.setColor(new Color(0, 255, 0));
         g.fillRect(0, 0, w, h);
         
        //rederização do jogo
-       // Graphics2D g2  = (Graphics2D) g;
         for(int i=0;i<entitys.size();i++){
         Entity e  = entitys.get(i);
          e.render(g);
@@ -119,6 +122,66 @@ public class Game extends Canvas implements Runnable {
     Game game  = new Game();
     game.start();     
         
+    }
+    //eventos do teclado    
+
+    @Override
+    public void keyTyped(KeyEvent ke) {
+     //movendo para os ladoas
+    if(ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D){
+        player.right = true;
+    
+    }else if(ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_A){
+        player.left = true;
+    }
+       //movendo para cima e para baixo
+    if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
+        player.up = true;
+            
+    }else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
+        player.down = true;
+            
+    }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent ke) {
+           //movendo para os ladoas
+    if(ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D){
+        player.right = true;
+    
+    }else if(ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_A){
+        player.left = true;
+    }
+       //movendo para cima e para baixo
+    if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
+        player.up = true;
+            
+    }else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
+        player.down = true;
+            
+    }
+    
+    }
+
+    @Override
+    public void keyReleased(KeyEvent ke) {
+    //movendo para os ladoas
+    if(ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D){
+        player.right = false;
+    
+    }else if(ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_A){
+        player.left = false;
+    }
+       //movendo para cima e para baixo
+    if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
+        player.up = false;
+            
+    }else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
+        player.down = false;
+            
+            
+    }
     }
     
 }

@@ -4,10 +4,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Entity {
-    private int x;
-    private int y;
-    private int w;
-    private int h;
+    protected double x;
+    protected double y;
+    protected int w;
+    protected int h;
     private BufferedImage sprite;
     public Graphics g;
     
@@ -22,7 +22,7 @@ public class Entity {
     }
 
     public int getX() {
-        return x;
+        return (int)x;
     }
 
     public void setX(int x) {
@@ -30,7 +30,7 @@ public class Entity {
     }
 
     public int getY() {
-        return y;
+        return (int)y;
     }
 
     public void setY(int y) {
