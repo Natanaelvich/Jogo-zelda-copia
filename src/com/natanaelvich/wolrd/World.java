@@ -15,8 +15,9 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 public class World {
-    private Tile[] tiles;
+    public static Tile[] tiles;
     public static int width,heght;
+    public static final int Tile_size = 16;
     
     public World(String path){
         try {
@@ -38,7 +39,7 @@ public class World {
                  }
                  else if(pixelAtual==0xffffffff){
                      //parede
-                 tiles[xx+(yy*map.getWidth())] = new Tile_Florr(xx*16, yy*16,Tile.TILE_WALLPRINCIPAL);
+                 tiles[xx+(yy*map.getWidth())] = new Tile_wall(xx*16, yy*16,Tile.TILE_WALLPRINCIPAL);
                  }
                  else if(pixelAtual==0xFF0026ff){
                      //player
@@ -64,6 +65,24 @@ public class World {
                       Logger.getLogger(World.class.getName()).log(Level.SEVERE, null, ex);
                       }
                       }
+    public static boolean isFree(int xnext,int ynext){
+    int x1 = xnext / Tile_size;
+    int y1 = ynext / Tile_size;
+    
+    int x2 = (xnext+Tile_size-1) / Tile_size;
+    int y2 = ynext / Tile_size;
+    
+    int x3 = xnext / Tile_size;
+    int y3 = (ynext +Tile_size-1 )/ Tile_size;
+    
+    int x4 = (xnext +Tile_size-1) / Tile_size;
+    int y4 = (ynext +Tile_size-1) / Tile_size;
+    
+    return !((tiles[x1+(y1*World.width)] instanceof Tile_wall) ||
+             (tiles[x2+(y2*World.width)] instanceof Tile_wall) ||
+             (tiles[x3+(y3*World.width)] instanceof Tile_wall) ||
+             (tiles[x4+(y4*World.width)] instanceof Tile_wall));
+    }
     public void render(Graphics g){
         int xstart  = Camera.x>>4;
         int ystart = Camera.y>>4;
