@@ -6,8 +6,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Tile {
-    public  BufferedImage Tile_Florr = Game.spritesheet.getSprite(0, 0, 16, 16);
-    public  BufferedImage Tile_Wall = Game.spritesheet.getSprite(16, 0, 16, 16);
+    protected static BufferedImage TILE_FLORRPRINCIPAL = Game.spritesheet.getSprite(0, 0, 16, 16);
+    protected static BufferedImage TILE_WALLPRINCIPAL = Game.spritesheet.getSprite(16, 0, 16, 16);
     
     private int x,y;
     private BufferedImage sprite;

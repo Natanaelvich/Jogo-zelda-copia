@@ -26,16 +26,16 @@ import javax.swing.JFrame;
 public class Game extends Canvas implements Runnable,KeyListener {
 
     private static final long serialVersionUID = 1l;
-    public final int w = 240;
-    public final int h = 120;
+    public final int w = 320;
+    public final int h = 240;
     public final int scale = 3;
     public BufferedImage layer = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
     private Thread thread;
     private boolean isRunning = true;
-    public List<Entity> entitys;
+    public static List<Entity> entitys;
     private BufferedImage image;
     public static Spritesheet spritesheet;
-    private Player player;
+    public static Player player;
     public static World world;
    
     public Game(){  
@@ -43,15 +43,13 @@ public class Game extends Canvas implements Runnable,KeyListener {
     this.setPreferredSize(new Dimension(w*scale, h*scale));
     initFrame();
     //inicializando objetos
-    world = new World("/map.png");
     image  = new BufferedImage(w, h,BufferedImage.TYPE_INT_RGB);
     entitys = new ArrayList<Entity>();
     spritesheet = new Spritesheet("/spritesheet.png");
     player = new Player(0,0,16,16,spritesheet.getSprite(32, 0, 16, 16));
+    world = new World("/map.png");
     entitys.add(player);
-    
-   
-    }
+     }
     //janela grfica
     public void initFrame(){
     JFrame frame = new JFrame("jogoZelda");
