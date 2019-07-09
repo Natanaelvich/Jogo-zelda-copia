@@ -1,6 +1,7 @@
 
 package com.natanaelvich.entites;
 import com.natanaelvich.main.Game;
+import com.natanaelvich.wolrd.Camera;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -57,11 +58,13 @@ public class Entity {
     public void setH(int h) {
         this.h = h;
     }
+        public void tick(){
+    
+    }
+
     
     public void render(Graphics g){
-   g.drawImage(sprite,this.getX(), this.getY(), null);
+   g.drawImage(sprite,this.getX()-Camera.x, this.getY()-Camera.y, null);
     }
-    public void tick(){
-    
-    }
+
 }

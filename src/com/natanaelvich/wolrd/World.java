@@ -60,22 +60,23 @@ public class World {
                  else if(pixelAtual==0xFFFF00DC) {
                   //life
                   Game.entitys.add(new Vida(xx*16, yy*16, 16, 16,Entity.life_en));
-                 }
-                 
-                 
-             }
-             
-             
-         }
-        } catch (IOException ex) {
-            Logger.getLogger(World.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+                 }}}} catch (IOException ex) {
+                      Logger.getLogger(World.class.getName()).log(Level.SEVERE, null, ex);
+                      }
+                      }
     public void render(Graphics g){
-    for(int xx=0;xx<width;xx++){
-    for(int yy=0;yy<heght;yy++){
-    Tile tiles1 = tiles[xx+(yy*width)];
-    tiles1.render(g);
+        int xstart  = Camera.x>>4;
+        int ystart = Camera.y>>4;
+        int xfinal = xstart  + (Game.w>>4);
+        int yfinal = ystart  + (Game.h>>4);
+        
+        
+        for(int xx = xstart ; xx<= xfinal ; xx++){
+        for(int yy = ystart ; yy <= yfinal ; yy++){
+        if(xx<0||yy<0||xx>=width||yy>=heght)
+        continue;
+        Tile tile = tiles[xx+(yy*width)];
+        tile.render(g);
     
     }
     }

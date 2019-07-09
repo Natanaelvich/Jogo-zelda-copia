@@ -1,13 +1,15 @@
-
+ 
 package com.natanaelvich.entites;
 
 import com.natanaelvich.main.Game;
+import com.natanaelvich.wolrd.Camera;
+import com.natanaelvich.wolrd.World;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Player  extends Entity{
     public boolean right,left,up,down;
-    public double speed = 0.8;
+    public double speed = 1.4;
     public int dir_right = 0,dir_left = 1;
     public int dir= dir_right;
     private int frames = 0,maxFrame = 5,index = 0, maxIndex = 3;
@@ -56,16 +58,19 @@ public class Player  extends Entity{
         }
         }
         }
+        //camera acompanhar o jogador
+        Camera.x =Camera.clamp(this.getX()-(Game.w/2),0 , World.width*16-Game.w);
+        Camera.y =Camera.clamp(this.getY()-(Game.h/2),0 , World.heght*16-Game.h);
     
     }
 
     @Override
     public void render(Graphics g){
         if(dir == dir_right){
-        g.drawImage(playerRight[index], this.getX(), this.getY(),null);
+        g.drawImage(playerRight[index], this.getX()-Camera.x, this.getY()-Camera.y,null);
         }
         else if(dir == dir_left){
-        g.drawImage(playerLeft[index], this.getX(), this.getY(),null);
+        g.drawImage(playerLeft[index], this.getX()-Camera.x, this.getY()-Camera.y,null);
         } 
         
     }

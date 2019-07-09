@@ -26,9 +26,9 @@ import javax.swing.JFrame;
 public class Game extends Canvas implements Runnable,KeyListener {
 
     private static final long serialVersionUID = 1l;
-    public final int w = 320;
-    public final int h = 240;
-    public final int scale = 3;
+    public static final int w = 240;
+    public static final int h = 120;
+    public static final int scale = 3;
     public BufferedImage layer = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
     private Thread thread;
     private boolean isRunning = true;
@@ -96,7 +96,7 @@ public class Game extends Canvas implements Runnable,KeyListener {
         g.fillRect(0, 0, w, h);
         
        //rederização do jogo
-       world.render(g);
+        world.render(g);
         for(int i=0;i<entitys.size();i++){
         Entity e  = entitys.get(i);
          e.render(g);
