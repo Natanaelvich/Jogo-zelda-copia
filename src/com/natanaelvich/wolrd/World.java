@@ -30,15 +30,18 @@ public class World {
             map.getRGB(0, 0, map.getWidth(), map.getHeight(), pixels, 0, map.getHeight());
             ////////////////////////////////////////
             for (int xx = 0; xx < map.getWidth(); xx++) {
+                
                 for (int yy = 0; yy < map.getHeight(); yy++) {
+                    
                     int pixelAtual = pixels[xx + (yy * map.getWidth())];
-                    tiles[xx + (yy * map.getWidth())] = new Tile_Florr(xx * 16, yy * 16, Tile.TILE_FLORRPRINCIPAL);
+                    tiles[xx + (yy * width)] = new Tile_Florr(xx * 16, yy * 16, Tile.TILE_FLORRPRINCIPAL);
+                    
                     if (pixelAtual == 0xff000000) {
                         //chao
-                        tiles[xx + (yy * map.getWidth())] = new Tile_Florr(xx * 16, yy * 16, Tile.TILE_FLORRPRINCIPAL);
+                        tiles[xx + (yy * width)] = new Tile_Florr(xx * 16, yy * 16, Tile.TILE_FLORRPRINCIPAL);
                     } else if (pixelAtual == 0xffffffff) {
                         //parede
-                        tiles[xx + (yy * map.getWidth())] = new Tile_wall(xx * 16, yy * 16, Tile.TILE_WALLPRINCIPAL);
+                        tiles[xx + (yy * width)] = new Tile_wall(xx * 16, yy * 16, Tile.TILE_WALLPRINCIPAL);
                     } else if (pixelAtual == 0xFF0026ff) {
                         //player
                         Game.player.setX(xx * 16);
@@ -89,7 +92,7 @@ public class World {
         int xstart = Camera.x >> 4;
         int ystart = Camera.y >> 4;
         int xfinal = xstart + (Game.w >> 4);
-        int yfinal = ystart + (Game.h >> 4);
+        int yfinal = ystart + (Game.h >> 4)+1;
 
         for (int xx = xstart; xx <= xfinal; xx++) {
             for (int yy = ystart; yy <= yfinal; yy++) {

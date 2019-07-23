@@ -35,10 +35,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static Spritesheet spritesheet;
     public static Player player;
     public static World world;
-    public static Random rand; 
+    public static Random rand;
 
     public Game() {
-        rand  = new Random();
+        rand = new Random();
         addKeyListener(this);
         this.setPreferredSize(new Dimension(w * scale, h * scale));
         initFrame();
@@ -48,8 +48,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         inimigos = new ArrayList<Inimigo>();
         spritesheet = new Spritesheet("/spritesheet.png");
         player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
-        world = new World("/map.png");
         entitys.add(player);
+        world = new World("/map.png");  
     }
 
     //janela grfica
@@ -113,17 +113,30 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void run() {
-        requestFocus();
-        while (true) {
-            tick();
-            render();
-            try {
-                Thread.sleep(1000 / 60);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+     
+        long lasttime = System.nanoTime();
+        double amountofticks = 60.0;
+        double ns = 1000000000 / amountofticks;
+        double delta = 0;
+        int frames = 0;
+        double timer = System.currentTimeMillis();
+        while (isRunning) {
+            long now = System.nanoTime();
+            delta += (now - lasttime) / ns;
+            lasttime = now;
+            if (delta >= 1) {
+                tick();
+                render();
+                frames++;
+                delta--;
+            }
+            if (System.currentTimeMillis() - timer >= 1000) {
+                System.out.println("FPS: " + frames);
+                frames = 0;
+                timer += 1000;
             }
         }
-
+        stop();
     }
 
     public static void main(String[] args) {
