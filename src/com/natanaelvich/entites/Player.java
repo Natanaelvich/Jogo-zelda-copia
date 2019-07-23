@@ -48,15 +48,15 @@ public class Player  extends Entity{
             moved = true;
             y+=speed;
         }
-        if(moved){
-        frames ++;
-        if(frames==maxFrame){
-        frames = 0;
-        index++;
-        if(index>maxIndex){
-        index = 0;
-        }
-        }
+        if (moved) {
+            frames++;
+            if (frames == maxFrame) {
+                frames = 0;
+                index++;
+                if (index > maxIndex) {
+                    index = 0;
+                }
+            }
         }
         //camera acompanhar o jogador
         Camera.x =Camera.clamp(this.getX()-(Game.w/2),0 , World.width*16-Game.w);
