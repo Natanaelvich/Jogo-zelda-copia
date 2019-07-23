@@ -3,7 +3,6 @@ package com.natanaelvich.entites;
 import com.natanaelvich.main.Game;
 import com.natanaelvich.wolrd.Camera;
 import com.natanaelvich.wolrd.World;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -24,17 +23,24 @@ public class Inimigo extends Entity {
 
     @Override
     public void tick() {
-        if ((int) x < Game.player.getX() && World.isFree((int) (x + speed), this.getY()) && !isColidding((int) (x + speed), this.getY())) {
-            x += speed;
-        } else if ((int) x > Game.player.getX() && World.isFree((int) (x - speed), this.getY()) && !isColidding((int) (x - speed), this.getY())) {
-            x -= speed;
+        if (isColiddingPlayer() == false) {
+            if ((int) x < Game.player.getX() && World.isFree((int) (x + speed), this.getY()) && !isColidding((int) (x + speed), this.getY())) {
+                x += speed;
+            } else if ((int) x > Game.player.getX() && World.isFree((int) (x - speed), this.getY()) && !isColidding((int) (x - speed), this.getY())) {
+                x -= speed;
+            }
+            if ((int) y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed)) && !isColidding(this.getX(), (int) (y + speed))) {
+                y += speed;
+            } else if ((int) y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed)) && !isColidding(this.getX(), (int) (y - speed))) {
+                y -= speed;
+            }
+        } else {
+            //colidindo com player
+            if (Game.rand.nextInt(100) < 10) {
+                Game.player.life--;
+                System.out.println("vida: " + Game.player.life);
+            }
         }
-        if ((int) y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed)) && !isColidding(this.getX(), (int) (y + speed))) {
-            y += speed;
-        } else if ((int) y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed)) && !isColidding(this.getX(), (int) (y - speed))) {
-            y -= speed;
-        }
-
         frames++;
         if (frames == maxFrame) {
             frames = 0;
@@ -44,6 +50,12 @@ public class Inimigo extends Entity {
 
             }
         }
+    }
+
+    public boolean isColiddingPlayer() {
+        Rectangle eneRectangle = new Rectangle(this.getX() + maskx, this.getY() + masky, maskw, maskh);
+        Rectangle player = new Rectangle(Game.player.getX(), Game.player.getY(), 16, 16);
+        return eneRectangle.intersects(player);
     }
 
     public boolean isColidding(int xnext, int ynext) {

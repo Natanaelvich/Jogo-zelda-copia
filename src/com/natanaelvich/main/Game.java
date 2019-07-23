@@ -4,6 +4,7 @@ import com.natanaelvich.entites.Entity;
 import com.natanaelvich.entites.Inimigo;
 import com.natanaelvich.entites.Player;
 import com.natanaelvich.graficos.Spritesheet;
+import com.natanaelvich.graficos.UI;
 import com.natanaelvich.wolrd.World;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -36,6 +37,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static Player player;
     public static World world;
     public static Random rand;
+    public static UI ui;
 
     public Game() {
         rand = new Random();
@@ -43,6 +45,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         this.setPreferredSize(new Dimension(w * scale, h * scale));
         initFrame();
         //inicializando objetos
+        ui = new UI();
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         entitys = new ArrayList<Entity>();
         inimigos = new ArrayList<Inimigo>();
@@ -105,6 +108,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
             Entity e = entitys.get(i);
             e.render(g);
         }
+        ui.render(g);
+        /////////
         g.dispose();
         g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, w * scale, h * scale, null);

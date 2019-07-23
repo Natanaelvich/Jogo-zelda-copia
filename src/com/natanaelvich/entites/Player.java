@@ -16,6 +16,7 @@ public class Player extends Entity {
     private boolean moved = false;
     private BufferedImage[] playerRight;
     private BufferedImage[] playerLeft;
+    public static double life  = 100, maxlife = 100;
 
     public Player(int x, int y, int w, int h, BufferedImage sprite) {
         super(x, y, w, h, sprite);
@@ -30,6 +31,7 @@ public class Player extends Entity {
         }
     }
 
+    @Override
     public void tick() {
         moved = false;
         if (right && World.isFree((int) (x + speed), this.getY())) {
