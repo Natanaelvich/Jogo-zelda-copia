@@ -1,10 +1,12 @@
 package com.natanaelvich.entites;
 
+import com.natanaelvich.graficos.Spritesheet;
 import com.natanaelvich.main.Game;
 import com.natanaelvich.wolrd.Camera;
 import com.natanaelvich.wolrd.World;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Player extends Entity {
 
@@ -18,11 +20,15 @@ public class Player extends Entity {
     private BufferedImage[] playerLeft;
     public static double life = 100, maxlife = 100;
     public int ammo = 0;
+    private BufferedImage playerdamage;
+    public boolean isdamage = false;
+    private int damageFrames = 0;
 
     public Player(int x, int y, int w, int h, BufferedImage sprite) {
         super(x, y, w, h, sprite);
         playerRight = new BufferedImage[4];
         playerLeft = new BufferedImage[4];
+        playerdamage = Game.spritesheet.getSprite(0, 16, 16, 16);
         //
         for (int i = 0; i < 4; i++) {
             playerRight[i] = Game.spritesheet.getSprite(32 + (i * 16), 0, 16, 16);
@@ -68,6 +74,23 @@ public class Player extends Entity {
         //checar colsisao com intem de vida
         checkVida();
         checkAmmo();
+        //animação de dano
+        if (isdamage) {
+            this.damageFrames++;
+            if (this.damageFrames == 30) {
+                this.damageFrames = 0;
+                isdamage = false;
+            }
+        }
+        /*if(life<=0){
+        Game.entitys = new ArrayList<Entity>();
+        Game.inimigos = new ArrayList<Inimigo>();
+        Game.spritesheet = new Spritesheet("/spritesheet.png");
+        Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
+        Game.entitys.add(Game.player);
+        Game.world = new World("/map.png"); 
+        return;
+        }*/
         //camera acompanhar o jogador
         Camera.x = Camera.clamp(this.getX() - (Game.w / 2), 0, World.width * 16 - Game.w);
         Camera.y = Camera.clamp(this.getY() - (Game.h / 2), 0, World.heght * 16 - Game.h);
@@ -96,7 +119,7 @@ public class Player extends Entity {
             if (atual instanceof Municao) {
                 if (Entity.isColidding(this, atual)) {
                     ammo += 10;
-                    System.out.println("munição atual : "+ammo);
+                    System.out.println("munição atual : " + ammo);
                     Game.entitys.remove(atual);
                 }
             }
@@ -106,12 +129,16 @@ public class Player extends Entity {
 
     @Override
     public void render(Graphics g) {
-        if (dir == dir_right) {
-            g.drawImage(playerRight[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-        } else if (dir == dir_left) {
-            g.drawImage(playerLeft[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-        }
+        if (!isdamage) {
+            if (dir == dir_right) {
+                g.drawImage(playerRight[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+            } else if (dir == dir_left) {
+                g.drawImage(playerLeft[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+            }
 
+        } else {
+            g.drawImage(playerdamage, this.getX() - Camera.x, this.getY() - Camera.y, null);
+        }
     }
 
 }

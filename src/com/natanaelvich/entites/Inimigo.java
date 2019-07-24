@@ -38,6 +38,7 @@ public class Inimigo extends Entity {
             //colidindo com player
             if (Game.rand.nextInt(100) < 10) {
                 Game.player.life--;
+                Game.player.isdamage = true;
                 System.out.println("vida: " + Game.player.life);
             }
         }
