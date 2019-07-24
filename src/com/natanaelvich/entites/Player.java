@@ -16,7 +16,7 @@ public class Player extends Entity {
     private boolean moved = false;
     private BufferedImage[] playerRight;
     private BufferedImage[] playerLeft;
-    public static double life  = 100, maxlife = 100;
+    public static double life = 100, maxlife = 100;
 
     public Player(int x, int y, int w, int h, BufferedImage sprite) {
         super(x, y, w, h, sprite);
@@ -44,7 +44,7 @@ public class Player extends Entity {
             dir = dir_left;
             x -= speed;
         }
-        
+
         if (up && World.isFree(this.getX(), (int) (y - speed))) {
             moved = true;
             y -= speed;
@@ -52,21 +52,40 @@ public class Player extends Entity {
             moved = true;
             y += speed;
         }
-        
+
         if (moved) {
             frames++;
             if (frames == maxFrame) {
                 frames = 0;
                 index++;
-                if (index > maxIndex) 
+                if (index > maxIndex) {
                     index = 0;
-                
+                }
+
             }
         }
+        //checar colsisao com intem de vida
+        checkItens();
         //camera acompanhar o jogador
         Camera.x = Camera.clamp(this.getX() - (Game.w / 2), 0, World.width * 16 - Game.w);
         Camera.y = Camera.clamp(this.getY() - (Game.h / 2), 0, World.heght * 16 - Game.h);
 
+    }
+
+    public void checkItens() {
+        for (int i = 0; i < Game.entitys.size(); i++) {
+            Entity atual = Game.entitys.get(i);
+            if (atual instanceof Vida ) {
+                if (Entity.isColidding(this, atual)) {
+                   life+=10;
+                   if(life>100){
+                   life = 100;
+                   Game.entitys.remove(atual);
+                   }
+                }
+            }
+
+        }
     }
 
     @Override
