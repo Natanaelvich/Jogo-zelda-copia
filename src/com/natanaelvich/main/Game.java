@@ -1,5 +1,6 @@
 package com.natanaelvich.main;
 
+import com.natanaelvich.entites.Atirar;
 import com.natanaelvich.entites.Entity;
 import com.natanaelvich.entites.Inimigo;
 import com.natanaelvich.entites.Player;
@@ -33,6 +34,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private boolean isRunning = true;
     public static List<Entity> entitys;
     public static List<Inimigo> inimigos;
+    public static List<Atirar> atirar;
     private BufferedImage image;
     public static Spritesheet spritesheet;
     public static Player player;
@@ -50,10 +52,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         entitys = new ArrayList<Entity>();
         inimigos = new ArrayList<Inimigo>();
+        atirar = new ArrayList<Atirar>();
         spritesheet = new Spritesheet("/spritesheet.png");
         player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
         entitys.add(player);
-        world = new World("/map.png");  
+        world = new World("/map.png");
     }
 
     //janela grfica
@@ -89,6 +92,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
             Entity e = entitys.get(i);
             e.tick();
         }
+        for (int i = 0; i < atirar.size(); i++) {
+            atirar.get(i).tick();
+        }
 
     }
 
@@ -109,20 +115,23 @@ public class Game extends Canvas implements Runnable, KeyListener {
             Entity e = entitys.get(i);
             e.render(g);
         }
+        for (int i = 0; i < atirar.size(); i++) {
+            atirar.get(i).render(g);
+        }
         ui.render(g);
         /////////
         g.dispose();
         g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, w * scale, h * scale, null);
-        g.setFont(new Font("arial",Font.BOLD,20));
+        g.setFont(new Font("arial", Font.BOLD, 20));
         g.setColor(Color.WHITE);
-        g.drawString("Munição: "+player.ammo,605,18);
+        g.drawString("Munição: " + player.ammo, 605, 18);
         bs.show();
     }
 
     @Override
     public void run() {
-        
+
         long lasttime = System.nanoTime();
         double amountofticks = 60.0;
         double ns = 1000000000 / amountofticks;
@@ -191,6 +200,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
             player.down = true;
 
         }
+        if (ke.getKeyCode() == KeyEvent.VK_E) {
+            player.atirar = true;
+
+        }
 
     }
 
@@ -209,6 +222,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         } else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
             player.down = false;
+
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_E) {
+            player.atirar = true;
 
         }
     }

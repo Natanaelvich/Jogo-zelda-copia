@@ -18,12 +18,13 @@ public class Player extends Entity {
     private boolean moved = false;
     private BufferedImage[] playerRight;
     private BufferedImage[] playerLeft;
-    public  double life = 100, maxlife = 100;
+    public double life = 100, maxlife = 100;
     public int ammo = 0;
     private BufferedImage playerdamage;
     public boolean isdamage = false;
     private int damageFrames = 0;
     private boolean arma = false;
+    public boolean atirar = false;
 
     public Player(int x, int y, int w, int h, BufferedImage sprite) {
         super(x, y, w, h, sprite);
@@ -84,16 +85,36 @@ public class Player extends Entity {
                 isdamage = false;
             }
         }
-        if(life<=0){
-        Game.entitys.clear();
-        Game.inimigos.clear();
-        Game.entitys = new ArrayList<Entity>();
-        Game.inimigos = new ArrayList<Inimigo>();
-        Game.spritesheet = new Spritesheet("/spritesheet.png");
-        Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
-        Game.entitys.add(Game.player);
-        Game.world = new World("/map.png"); 
-        return;
+        //Atirando com o player
+        if (atirar) {
+            atirar = false;
+            if (arma && ammo > 0) {
+                ammo--;
+                int px = 0;
+                int py = 5;
+                int dx = 0;
+                if (dir == dir_right) {
+                    px = 18;
+                    dx = 1;
+                } else {
+                    px = -8;
+                    dx = -1;
+                }
+                Atirar atirarbalas = new Atirar(this.getX() + px, this.getY() + py, 3, 3, null, dx, 0);
+                Game.atirar.add(atirarbalas);
+            }
+        }
+        //Game Over
+        if (life <= 0) {
+            Game.entitys.clear();
+            Game.inimigos.clear();
+            Game.entitys = new ArrayList<Entity>();
+            Game.inimigos = new ArrayList<Inimigo>();
+            Game.spritesheet = new Spritesheet("/spritesheet.png");
+            Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
+            Game.entitys.add(Game.player);
+            Game.world = new World("/map.png");
+            return;
         }
         //camera acompanhar o jogador
         Camera.x = Camera.clamp(this.getX() - (Game.w / 2), 0, World.width * 16 - Game.w);
@@ -130,6 +151,7 @@ public class Player extends Entity {
 
         }
     }
+
     public void checkArma() {
         for (int i = 0; i < Game.entitys.size(); i++) {
             Entity atual = Game.entitys.get(i);
@@ -150,15 +172,15 @@ public class Player extends Entity {
             if (dir == dir_right) {
                 g.drawImage(playerRight[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
                 //desenhar arma para direita
-                if(arma){
-                g.drawImage(Entity.arma_right, this.getX()-Camera.x+8, this.getY()-Camera.y, null);
+                if (arma) {
+                    g.drawImage(Entity.arma_right, this.getX() - Camera.x + 8, this.getY() - Camera.y, null);
                 }
             } else if (dir == dir_left) {
                 g.drawImage(playerLeft[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
                 //desenhar arma para esquerda
-                if(arma){
-                g.drawImage(Entity.arma_left, this.getX()-Camera.x-8, this.getY()-Camera.y, null);
-                
+                if (arma) {
+                    g.drawImage(Entity.arma_left, this.getX() - Camera.x - 8, this.getY() - Camera.y, null);
+
                 }
             }
 
