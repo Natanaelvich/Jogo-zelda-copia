@@ -14,6 +14,8 @@ public class Entity {
     public static BufferedImage arma_en = Game.spritesheet.getSprite(7 * 16, 0, 16, 16);
     public static BufferedImage municao_en = Game.spritesheet.getSprite(6 * 16, 16, 16, 16);
     public static BufferedImage inimigo_en = Game.spritesheet.getSprite(7 * 16, 16, 16, 16);
+    public static BufferedImage arma_right = Game.spritesheet.getSprite(128,0, 16, 16);
+    public static BufferedImage arma_left = Game.spritesheet.getSprite(128+16,0,16, 16);
     protected double x;
     protected double y;
     protected int w;

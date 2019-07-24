@@ -18,11 +18,12 @@ public class Player extends Entity {
     private boolean moved = false;
     private BufferedImage[] playerRight;
     private BufferedImage[] playerLeft;
-    public static double life = 100, maxlife = 100;
+    public  double life = 100, maxlife = 100;
     public int ammo = 0;
     private BufferedImage playerdamage;
     public boolean isdamage = false;
     private int damageFrames = 0;
+    private boolean arma = false;
 
     public Player(int x, int y, int w, int h, BufferedImage sprite) {
         super(x, y, w, h, sprite);
@@ -71,9 +72,10 @@ public class Player extends Entity {
 
             }
         }
-        //checar colsisao com intem de vida
+        //checar colsisao com intens
         checkVida();
         checkAmmo();
+        checkArma();
         //animação de dano
         if (isdamage) {
             this.damageFrames++;
@@ -82,7 +84,9 @@ public class Player extends Entity {
                 isdamage = false;
             }
         }
-        /*if(life<=0){
+        if(life<=0){
+        Game.entitys.clear();
+        Game.inimigos.clear();
         Game.entitys = new ArrayList<Entity>();
         Game.inimigos = new ArrayList<Inimigo>();
         Game.spritesheet = new Spritesheet("/spritesheet.png");
@@ -90,7 +94,7 @@ public class Player extends Entity {
         Game.entitys.add(Game.player);
         Game.world = new World("/map.png"); 
         return;
-        }*/
+        }
         //camera acompanhar o jogador
         Camera.x = Camera.clamp(this.getX() - (Game.w / 2), 0, World.width * 16 - Game.w);
         Camera.y = Camera.clamp(this.getY() - (Game.h / 2), 0, World.heght * 16 - Game.h);
@@ -126,14 +130,36 @@ public class Player extends Entity {
 
         }
     }
+    public void checkArma() {
+        for (int i = 0; i < Game.entitys.size(); i++) {
+            Entity atual = Game.entitys.get(i);
+            if (atual instanceof Arma) {
+                if (Entity.isColidding(this, atual)) {
+                    arma = true;
+                    System.out.println("munição atual : " + ammo);
+                    Game.entitys.remove(atual);
+                }
+            }
+
+        }
+    }
 
     @Override
     public void render(Graphics g) {
         if (!isdamage) {
             if (dir == dir_right) {
                 g.drawImage(playerRight[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+                //desenhar arma para direita
+                if(arma){
+                g.drawImage(Entity.arma_right, this.getX()-Camera.x+8, this.getY()-Camera.y, null);
+                }
             } else if (dir == dir_left) {
                 g.drawImage(playerLeft[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+                //desenhar arma para esquerda
+                if(arma){
+                g.drawImage(Entity.arma_left, this.getX()-Camera.x-8, this.getY()-Camera.y, null);
+                
+                }
             }
 
         } else {
