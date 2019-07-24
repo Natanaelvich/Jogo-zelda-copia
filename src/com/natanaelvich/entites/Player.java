@@ -17,6 +17,7 @@ public class Player extends Entity {
     private BufferedImage[] playerRight;
     private BufferedImage[] playerLeft;
     public static double life = 100, maxlife = 100;
+    public int ammo = 0;
 
     public Player(int x, int y, int w, int h, BufferedImage sprite) {
         super(x, y, w, h, sprite);
@@ -65,23 +66,38 @@ public class Player extends Entity {
             }
         }
         //checar colsisao com intem de vida
-        checkItens();
+        checkVida();
+        checkAmmo();
         //camera acompanhar o jogador
         Camera.x = Camera.clamp(this.getX() - (Game.w / 2), 0, World.width * 16 - Game.w);
         Camera.y = Camera.clamp(this.getY() - (Game.h / 2), 0, World.heght * 16 - Game.h);
 
     }
 
-    public void checkItens() {
+    public void checkVida() {
         for (int i = 0; i < Game.entitys.size(); i++) {
             Entity atual = Game.entitys.get(i);
-            if (atual instanceof Vida ) {
+            if (atual instanceof Vida) {
                 if (Entity.isColidding(this, atual)) {
-                   life+=10;
-                   if(life>100){
-                   life = 100;
-                   Game.entitys.remove(atual);
-                   }
+                    life += 10;
+                    if (life > 100) {
+                        life = 100;
+                        Game.entitys.remove(atual);
+                    }
+                }
+            }
+
+        }
+    }
+
+    public void checkAmmo() {
+        for (int i = 0; i < Game.entitys.size(); i++) {
+            Entity atual = Game.entitys.get(i);
+            if (atual instanceof Municao) {
+                if (Entity.isColidding(this, atual)) {
+                    ammo += 10;
+                    System.out.println("munição atual : "+ammo);
+                    Game.entitys.remove(atual);
                 }
             }
 
