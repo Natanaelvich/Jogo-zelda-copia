@@ -8,12 +8,12 @@ import java.awt.image.BufferedImage;
 
 public class Atirar extends Entity {
 
-    private int dir_x;
-    private int dir_y;
+    private double dir_x;
+    private double dir_y;
     private double spd = 4;
-    private int life  = 30, currLife  = 0;
+    private int life = 30, currLife = 0;
 
-    public Atirar(int x, int y, int w, int h, BufferedImage sprite, int dir_x, int dir_y) {
+    public Atirar(int x, int y, int w, int h, BufferedImage sprite, double dir_x, double dir_y) {
         super(x, y, w, h, sprite);
         this.dir_x = dir_x;
         this.dir_y = dir_y;
@@ -24,7 +24,7 @@ public class Atirar extends Entity {
         x += dir_x * spd;
         y += dir_y * spd;
         currLife++;
-        if(currLife==life){
+        if (currLife == life) {
             Game.atirar.remove(this);
             return;
         }

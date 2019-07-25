@@ -24,7 +24,8 @@ public class Player extends Entity {
     public boolean isdamage = false;
     private int damageFrames = 0;
     private boolean arma = false;
-    public boolean atirar = false;
+    public boolean atirar = false, mouseTiro = false;
+    public int mx, my;
 
     public Player(int x, int y, int w, int h, BufferedImage sprite) {
         super(x, y, w, h, sprite);
@@ -101,6 +102,28 @@ public class Player extends Entity {
                     dx = -1;
                 }
                 Atirar atirarbalas = new Atirar(this.getX() + px, this.getY() + py, 3, 3, null, dx, 0);
+                Game.atirar.add(atirarbalas);
+            }
+        }
+        if (mouseTiro) {
+            mouseTiro = false;
+
+            if (arma && ammo > 0) {
+                ammo--;
+
+                int px = 0, py = 8;
+
+                double angulo = 0;
+                if (dir == dir_right) {
+                    px = 18;
+                    angulo = Math.atan2(my - (this.getY() + py - Camera.y), mx - (this.getX() + 8 - Camera.x));
+                } else {
+                    px = -8;
+                    angulo = Math.atan2(my - (this.getY() + py - Camera.y), mx - (this.getX() + 8 - Camera.x));
+                }
+                double dx = Math.cos(angulo);
+                double dy = Math.sin(angulo);
+                Atirar atirarbalas = new Atirar(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy);
                 Game.atirar.add(atirarbalas);
             }
         }

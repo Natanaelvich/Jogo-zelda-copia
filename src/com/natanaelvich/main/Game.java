@@ -6,6 +6,7 @@ import com.natanaelvich.entites.Inimigo;
 import com.natanaelvich.entites.Player;
 import com.natanaelvich.graficos.Spritesheet;
 import com.natanaelvich.graficos.UI;
+import com.natanaelvich.wolrd.Camera;
 import com.natanaelvich.wolrd.World;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -14,6 +15,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -23,7 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable, KeyListener {
+public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
 
     private static final long serialVersionUID = 1l;
     public static final int w = 240;
@@ -45,6 +48,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public Game() {
         rand = new Random();
         addKeyListener(this);
+        addMouseListener(this);
         this.setPreferredSize(new Dimension(w * scale, h * scale));
         initFrame();
         //inicializando objetos
@@ -228,6 +232,29 @@ public class Game extends Canvas implements Runnable, KeyListener {
             player.atirar = true;
 
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+        player.mouseTiro = true;
+        player.mx = (me.getX() / 3);
+        player.my = (me.getY() / 3);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
     }
 
 }
