@@ -13,6 +13,7 @@ public class Inimigo extends Entity {
     private int maskx = 8, masky = 8, maskw = 5, maskh = 5;
     private int frames = 0, maxFrame = 20, index = 0, maxIndex = 1;
     private BufferedImage[] sprites;
+    private int life = 20;
 
     public Inimigo(int x, int y, int w, int h, BufferedImage sprite) {
         super(x, y, w, h, null);
@@ -51,6 +52,30 @@ public class Inimigo extends Entity {
 
             }
         }
+        //destruindo inimigo
+        coliggingBullet();
+        if (life <= 0) {
+            destroySelf();
+        }
+
+    }
+
+    public void destroySelf() {
+        Game.entitys.remove(this);
+    }
+
+    public void coliggingBullet() {
+        for (int i = 0; i < Game.atirar.size(); i++) {
+            Entity e = Game.atirar.get(i);
+            if (e instanceof Atirar) {
+                if (Entity.isColidding(this, e)) {
+                    life--;
+                    Game.atirar.remove(i);
+                    return;
+                }
+            }
+        }
+
     }
 
     public boolean isColiddingPlayer() {

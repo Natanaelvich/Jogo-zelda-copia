@@ -6,7 +6,6 @@ import com.natanaelvich.entites.Inimigo;
 import com.natanaelvich.entites.Player;
 import com.natanaelvich.graficos.Spritesheet;
 import com.natanaelvich.graficos.UI;
-import com.natanaelvich.wolrd.Camera;
 import com.natanaelvich.wolrd.World;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -129,7 +128,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         g.drawImage(image, 0, 0, w * scale, h * scale, null);
         g.setFont(new Font("arial", Font.BOLD, 20));
         g.setColor(Color.WHITE);
-        g.drawString("Munição: " + player.ammo, 605, 18);
+        g.drawString("Munição: " + player.ammo, 580, 18);
         bs.show();
     }
 
