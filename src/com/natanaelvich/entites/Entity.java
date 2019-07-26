@@ -2,11 +2,9 @@ package com.natanaelvich.entites;
 
 import com.natanaelvich.main.Game;
 import com.natanaelvich.wolrd.Camera;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import jdk.nashorn.internal.codegen.CompilerConstants;
 
 public class Entity {
 
@@ -14,8 +12,9 @@ public class Entity {
     public static BufferedImage arma_en = Game.spritesheet.getSprite(7 * 16, 0, 16, 16);
     public static BufferedImage municao_en = Game.spritesheet.getSprite(6 * 16, 16, 16, 16);
     public static BufferedImage inimigo_en = Game.spritesheet.getSprite(7 * 16, 16, 16, 16);
-    public static BufferedImage arma_right = Game.spritesheet.getSprite(128,0, 16, 16);
-    public static BufferedImage arma_left = Game.spritesheet.getSprite(128+16,0,16, 16);
+    public static BufferedImage inimigo_dano = Game.spritesheet.getSprite(9 * 16, 16, 16, 16);
+    public static BufferedImage arma_right = Game.spritesheet.getSprite(128, 0, 16, 16);
+    public static BufferedImage arma_left = Game.spritesheet.getSprite(128 + 16, 0, 16, 16);
     protected double x;
     protected double y;
     protected int w;
