@@ -4,11 +4,14 @@ import com.natanaelvich.entites.Arma;
 import com.natanaelvich.entites.Entity;
 import com.natanaelvich.entites.Inimigo;
 import com.natanaelvich.entites.Municao;
+import com.natanaelvich.entites.Player;
 import com.natanaelvich.entites.Vida;
+import com.natanaelvich.graficos.Spritesheet;
 import com.natanaelvich.main.Game;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -30,12 +33,12 @@ public class World {
             map.getRGB(0, 0, map.getWidth(), map.getHeight(), pixels, 0, map.getHeight());
             ////////////////////////////////////////
             for (int xx = 0; xx < map.getWidth(); xx++) {
-                
+
                 for (int yy = 0; yy < map.getHeight(); yy++) {
-                    
+
                     int pixelAtual = pixels[xx + (yy * map.getWidth())];
                     tiles[xx + (yy * width)] = new Tile_Florr(xx * 16, yy * 16, Tile.TILE_FLORRPRINCIPAL);
-                    
+
                     if (pixelAtual == 0xff000000) {
                         //chao
                         tiles[xx + (yy * width)] = new Tile_Florr(xx * 16, yy * 16, Tile.TILE_FLORRPRINCIPAL);
@@ -69,6 +72,18 @@ public class World {
         }
     }
 
+    public static void restartGame(String level) {
+        Game.entitys.clear();
+        Game.inimigos.clear();
+        Game.entitys = new ArrayList<Entity>();
+        Game.inimigos = new ArrayList<Inimigo>();
+        Game.spritesheet = new Spritesheet("/spritesheet.png");
+        Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
+        Game.entitys.add(Game.player);
+        Game.world = new World("/"+level);
+        return;
+    }
+
     public static boolean isFree(int xnext, int ynext) {
         int x1 = xnext / Tile_size;
         int y1 = ynext / Tile_size;
@@ -92,7 +107,7 @@ public class World {
         int xstart = Camera.x >> 4;
         int ystart = Camera.y >> 4;
         int xfinal = xstart + (Game.w >> 4);
-        int yfinal = ystart + (Game.h >> 4)+1;
+        int yfinal = ystart + (Game.h >> 4) + 1;
 
         for (int xx = xstart; xx <= xfinal; xx++) {
             for (int yy = ystart; yy <= yfinal; yy++) {

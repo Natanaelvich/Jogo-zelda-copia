@@ -43,6 +43,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     public static World world;
     public static Random rand;
     public static UI ui;
+    private int cur_level = 1,max_level = 2;
 
     public Game() {
         rand = new Random();
@@ -59,7 +60,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         spritesheet = new Spritesheet("/spritesheet.png");
         player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
         entitys.add(player);
-        world = new World("/map.png");
+        world = new World("/level1.png");
     }
 
     //janela grfica
@@ -97,6 +98,15 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         }
         for (int i = 0; i < atirar.size(); i++) {
             atirar.get(i).tick();
+        }
+        if (inimigos.size()==0) {
+            //avançãr de level
+            cur_level++;
+            if(cur_level>max_level){
+            cur_level = 1;
+            }
+            String newWorld = "level"+cur_level+".png";
+            World.restartGame(newWorld);
         }
 
     }

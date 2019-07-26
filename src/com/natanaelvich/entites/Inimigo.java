@@ -15,7 +15,7 @@ public class Inimigo extends Entity {
     private BufferedImage[] sprites;
     private int life = 20;
     private boolean isDamage = false;
-    private int damageFrames = 10,damageCurrent = 0;
+    private int damageFrames = 10, damageCurrent = 0;
 
     public Inimigo(int x, int y, int w, int h, BufferedImage sprite) {
         super(x, y, w, h, null);
@@ -60,17 +60,18 @@ public class Inimigo extends Entity {
             destroySelf();
         }
         //animação do dano
-        if(isDamage){
-        this.damageCurrent++;
-        if(this.damageCurrent==this.damageFrames){
-        this.damageCurrent=0;
-        this.isDamage = false;
-        }
+        if (isDamage) {
+            this.damageCurrent++;
+            if (this.damageCurrent == this.damageFrames) {
+                this.damageCurrent = 0;
+                this.isDamage = false;
+            }
         }
 
     }
 
     public void destroySelf() {
+        Game.inimigos.remove(this);
         Game.entitys.remove(this);
     }
 
@@ -112,10 +113,11 @@ public class Inimigo extends Entity {
 
     @Override
     public void render(Graphics g) {
-        if(!isDamage)
-        g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-        else
-        g.drawImage(Entity.inimigo_dano, this.getX() - Camera.x, this.getY() - Camera.y, null);
+        if (!isDamage) {
+            g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+        } else {
+            g.drawImage(Entity.inimigo_dano, this.getX() - Camera.x, this.getY() - Camera.y, null);
+        }
         //testando mascara de colisao
         //super.render(g);
         // g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, maskw, maskh);

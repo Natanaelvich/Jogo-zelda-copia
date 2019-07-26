@@ -129,15 +129,7 @@ public class Player extends Entity {
         }
         //Game Over
         if (life <= 0) {
-            Game.entitys.clear();
-            Game.inimigos.clear();
-            Game.entitys = new ArrayList<Entity>();
-            Game.inimigos = new ArrayList<Inimigo>();
-            Game.spritesheet = new Spritesheet("/spritesheet.png");
-            Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
-            Game.entitys.add(Game.player);
-            Game.world = new World("/map.png");
-            return;
+           
         }
         //camera acompanhar o jogador
         Camera.x = Camera.clamp(this.getX() - (Game.w / 2), 0, World.width * 16 - Game.w);
@@ -166,7 +158,7 @@ public class Player extends Entity {
             Entity atual = Game.entitys.get(i);
             if (atual instanceof Municao) {
                 if (Entity.isColidding(this, atual)) {
-                    ammo += 10;
+                    ammo += 100;
                     System.out.println("munição atual : " + ammo);
                     Game.entitys.remove(atual);
                 }
