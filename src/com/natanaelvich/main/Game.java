@@ -46,6 +46,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     public static UI ui;
     private int cur_level = 1, max_level = 2;
     public static String gameStat = "normal";
+    private boolean showMensageGameOver = true;
+    private int framesGameOver = 0;
+    private boolean restartGame = false;
 
     public Game() {
         rand = new Random();
@@ -95,6 +98,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public void tick() {
         if (gameStat == "normal") {
+            this.restartGame = false;
             for (int i = 0; i < entitys.size(); i++) {
                 Entity e = entitys.get(i);
                 e.tick();
@@ -108,14 +112,33 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
                 if (cur_level > max_level) {
                     cur_level = 1;
                 }
+                //reiniciando o game
                 String newWorld = "level" + cur_level + ".png";
                 World.restartGame(newWorld);
             }
+        } else if (gameStat == "GameOver") {
+            this.framesGameOver++;
+            if (framesGameOver == 15) {
+                this.framesGameOver = 0;
+                if (this.showMensageGameOver) {
+                    this.showMensageGameOver = false;
+                } else {
+                    this.showMensageGameOver = true;
+                }
+            }
+
         }
-
+        if (restartGame) {
+            this.restartGame = false;
+            this.gameStat = "normal";
+            cur_level = 1;
+            //reiniciando o game
+            String newWorld = "level" + cur_level + ".png";
+            World.restartGame(newWorld);
+        }
     }
-
     //rederizar
+
     public void render() {
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null) {
@@ -152,7 +175,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             g.drawString("GAME OVER", 240, 170);
             g.setFont(new Font("arial", Font.BOLD, 20));
             g.setColor(Color.WHITE);
-            g.drawString(">pressione ENTER para reiniciar", 220, 210);
+            if (showMensageGameOver) {
+                g.drawString(">pressione ENTER para reiniciar", 220, 210);
+            }
         }
         bs.show();
     }
@@ -209,6 +234,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             player.down = true;
 
         }
+        if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.restartGame = true;
+        }
     }
 
     @Override
@@ -232,7 +260,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             player.atirar = true;
 
         }
-
+        if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.restartGame = true;
+        }
     }
 
     @Override
@@ -255,6 +285,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         if (ke.getKeyCode() == KeyEvent.VK_E) {
             player.atirar = true;
 
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.restartGame = true;
         }
     }
 

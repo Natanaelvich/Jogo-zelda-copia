@@ -127,6 +127,7 @@ public class Player extends Entity {
         }
         //Game Over
         if (life <= 0) {
+            this.life = 0;
             Game.gameStat  = "GameOver";
         }
         //camera acompanhar o jogador
