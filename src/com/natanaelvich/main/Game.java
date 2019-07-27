@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -43,7 +44,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     public static World world;
     public static Random rand;
     public static UI ui;
-    private int cur_level = 1,max_level = 2;
+    private int cur_level = 1, max_level = 2;
+    public static String gameStat = "normal";
 
     public Game() {
         rand = new Random();
@@ -92,21 +94,23 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     }
 
     public void tick() {
-        for (int i = 0; i < entitys.size(); i++) {
-            Entity e = entitys.get(i);
-            e.tick();
-        }
-        for (int i = 0; i < atirar.size(); i++) {
-            atirar.get(i).tick();
-        }
-        if (inimigos.size()==0) {
-            //avançãr de level
-            cur_level++;
-            if(cur_level>max_level){
-            cur_level = 1;
+        if (gameStat == "normal") {
+            for (int i = 0; i < entitys.size(); i++) {
+                Entity e = entitys.get(i);
+                e.tick();
             }
-            String newWorld = "level"+cur_level+".png";
-            World.restartGame(newWorld);
+            for (int i = 0; i < atirar.size(); i++) {
+                atirar.get(i).tick();
+            }
+            if (inimigos.size() == 0) {
+                //avançãr de level
+                cur_level++;
+                if (cur_level > max_level) {
+                    cur_level = 1;
+                }
+                String newWorld = "level" + cur_level + ".png";
+                World.restartGame(newWorld);
+            }
         }
 
     }
@@ -139,6 +143,17 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         g.setFont(new Font("arial", Font.BOLD, 20));
         g.setColor(Color.WHITE);
         g.drawString("Munição: " + player.ammo, 580, 18);
+        if (gameStat == "GameOver") {
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setColor(new Color(0, 0, 0, 100));
+            g2.fillRect(0, 0, w * scale, h * scale);
+            g.setFont(new Font("arial", Font.BOLD, 40));
+            g.setColor(Color.WHITE);
+            g.drawString("GAME OVER", 240, 170);
+            g.setFont(new Font("arial", Font.BOLD, 20));
+            g.setColor(Color.WHITE);
+            g.drawString(">pressione ENTER para reiniciar", 220, 210);
+        }
         bs.show();
     }
 

@@ -1,12 +1,10 @@
 package com.natanaelvich.entites;
 
-import com.natanaelvich.graficos.Spritesheet;
 import com.natanaelvich.main.Game;
 import com.natanaelvich.wolrd.Camera;
 import com.natanaelvich.wolrd.World;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Player extends Entity {
 
@@ -18,7 +16,7 @@ public class Player extends Entity {
     private boolean moved = false;
     private BufferedImage[] playerRight;
     private BufferedImage[] playerLeft;
-    public double life = 100, maxlife = 100;
+    public double life = 10, maxlife = 100;
     public int ammo = 0;
     private BufferedImage playerdamage;
     public boolean isdamage = false;
@@ -129,7 +127,7 @@ public class Player extends Entity {
         }
         //Game Over
         if (life <= 0) {
-           
+            Game.gameStat  = "GameOver";
         }
         //camera acompanhar o jogador
         Camera.x = Camera.clamp(this.getX() - (Game.w / 2), 0, World.width * 16 - Game.w);
