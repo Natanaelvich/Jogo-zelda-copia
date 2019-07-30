@@ -15,6 +15,7 @@ public class Entity {
     public static BufferedImage inimigo_dano = Game.spritesheet.getSprite(9 * 16, 16, 16, 16);
     public static BufferedImage arma_right = Game.spritesheet.getSprite(128, 0, 16, 16);
     public static BufferedImage arma_left = Game.spritesheet.getSprite(128 + 16, 0, 16, 16);
+    public static BufferedImage backgMenu = Game.spritesheet.getSprite(128 + 16, 0, 16, 16);
     protected double x;
     protected double y;
     protected int w;

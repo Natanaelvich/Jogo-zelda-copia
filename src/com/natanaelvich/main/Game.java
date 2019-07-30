@@ -63,12 +63,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         entitys = new ArrayList<Entity>();
         inimigos = new ArrayList<Inimigo>();
         atirar = new ArrayList<Atirar>();
-        
+
         spritesheet = new Spritesheet("/spritesheet.png");
         player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
         entitys.add(player);
         world = new World("/level1.png");
-        menu  = new Menu();
+        menu = new Menu();
     }
 
     //janela grfica
@@ -138,9 +138,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             //reiniciando o game
             String newWorld = "level" + cur_level + ".png";
             World.restartGame(newWorld);
-        }else if(gameStat=="Menu"){
+        } else if (gameStat == "Menu") {
             menu.tick();
-        
         }
     }
     //rederizar
@@ -184,7 +183,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             if (showMensageGameOver) {
                 g.drawString(">pressione ENTER para reiniciar", 220, 210);
             }
-            }else if(gameStat == "Menu"){
+        } else if (gameStat == "Menu") {
             menu.render(g);
         }
         bs.show();
@@ -192,7 +191,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     @Override
     public void run() {
-
+        requestFocus();
         long lasttime = System.nanoTime();
         double amountofticks = 60.0;
         double ns = 1000000000 / amountofticks;
@@ -227,6 +226,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     @Override
     public void keyTyped(KeyEvent ke) {
+        /*
         //movendo para os ladoas
         if (ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D) {
             player.right = true;
@@ -237,14 +237,26 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         //movendo para cima e para baixo
         if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
             player.up = true;
+            if (gameStat == "Menu") {
+                menu.up = true;
+            }
 
         } else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
             player.down = true;
-
+            if (gameStat == "Menu") {
+                menu.down = true;
+            }
         }
         if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
             this.restartGame = true;
+            if (gameStat == "Menu") {
+                menu.enter = true;
+            }
         }
+        if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            gameStat = "Menu";
+            menu.pause = true;
+        }*/
     }
 
     @Override
@@ -259,28 +271,37 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         //movendo para cima e para baixo
         if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
             player.up = true;
-                if(gameStat=="Menu"){
-            menu.up = true;
+            if (gameStat == "Menu") {
+                menu.up = true;
             }
-
         } else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
             player.down = true;
-            if(gameStat=="Menu"){
-            menu.down= true;
+            if (gameStat == "Menu") {
+                menu.down = true;
             }
-
         }
         if (ke.getKeyCode() == KeyEvent.VK_E) {
             player.atirar = true;
 
         }
         if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.restartGame = true;
+            if (gameStat == "Menu") {
+                menu.enter = true;
+            }
+            if (gameStat == "GameOver") {
+                this.restartGame = true;
+            }
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            gameStat = "Menu";
+            menu.pause = true;
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {
+    public void keyReleased(KeyEvent ke
+    ) {
+
         //movendo para os ladoas
         if (ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D) {
             player.right = false;
@@ -298,34 +319,35 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         }
         if (ke.getKeyCode() == KeyEvent.VK_E) {
             player.atirar = true;
-
-        }
-        if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.restartGame = true;
         }
     }
 
     @Override
-    public void mouseClicked(MouseEvent me) {
+    public void mouseClicked(MouseEvent me
+    ) {
     }
 
     @Override
-    public void mousePressed(MouseEvent me) {
+    public void mousePressed(MouseEvent me
+    ) {
         player.mouseTiro = true;
         player.mx = (me.getX() / 3);
         player.my = (me.getY() / 3);
     }
 
     @Override
-    public void mouseReleased(MouseEvent me) {
+    public void mouseReleased(MouseEvent me
+    ) {
     }
 
     @Override
-    public void mouseEntered(MouseEvent me) {
+    public void mouseEntered(MouseEvent me
+    ) {
     }
 
     @Override
-    public void mouseExited(MouseEvent me) {
+    public void mouseExited(MouseEvent me
+    ) {
     }
 
 }

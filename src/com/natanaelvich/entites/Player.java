@@ -10,12 +10,14 @@ public class Player extends Entity {
 
     public boolean right, left, up, down;
     public double speed = 1.4;
-    public int dir_right = 0, dir_left = 1;
+    public int dir_right = 0, dir_left = 1, dir_up = 2, dir_down = 3;
     public int dir = dir_right;
     private int frames = 0, maxFrame = 5, index = 0, maxIndex = 3;
     private boolean moved = false;
     private BufferedImage[] playerRight;
     private BufferedImage[] playerLeft;
+    private BufferedImage[] playerUp;
+    private BufferedImage[] playerDown;
     public double life = 10, maxlife = 100;
     public int ammo = 0;
     private BufferedImage playerdamage;
@@ -29,6 +31,8 @@ public class Player extends Entity {
         super(x, y, w, h, sprite);
         playerRight = new BufferedImage[4];
         playerLeft = new BufferedImage[4];
+        playerUp = new BufferedImage[4];
+        playerDown = new BufferedImage[4];
         playerdamage = Game.spritesheet.getSprite(0, 16, 16, 16);
         //
         for (int i = 0; i < 4; i++) {
@@ -36,6 +40,12 @@ public class Player extends Entity {
         }
         for (int i = 0; i < 4; i++) {
             playerLeft[i] = Game.spritesheet.getSprite(32 + (i * 16), 16, 16, 16);
+        }
+        for (int i = 0; i < 4; i++) {
+            playerUp[i] = Game.spritesheet.getSprite(32 + (i * 16), 32, 16, 16);
+        }
+        for (int i = 0; i < 4; i++) {
+            playerDown[i] = Game.spritesheet.getSprite(32 + (i * 16), 48, 16, 16);
         }
     }
 
@@ -55,9 +65,11 @@ public class Player extends Entity {
 
         if (up && World.isFree(this.getX(), (int) (y - speed))) {
             moved = true;
+            dir = dir_up;
             y -= speed;
         } else if (down && World.isFree(this.getX(), (int) (y + speed))) {
             moved = true;
+            dir = dir_down;
             y += speed;
         }
 
@@ -128,7 +140,7 @@ public class Player extends Entity {
         //Game Over
         if (life <= 0) {
             this.life = 0;
-            Game.gameStat  = "GameOver";
+            Game.gameStat = "GameOver";
         }
         //camera acompanhar o jogador
         Camera.x = Camera.clamp(this.getX() - (Game.w / 2), 0, World.width * 16 - Game.w);
@@ -198,9 +210,21 @@ public class Player extends Entity {
                 }
             }
 
+            if (dir == dir_up) {
+                g.drawImage(playerUp[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+                //desenhar arma para esquerda
+                if (arma) {
+                    g.drawImage(Entity.arma_right, this.getX() - Camera.x + 8, this.getY() - Camera.y, null);
+                }
+            } else if (dir == dir_down) {
+                g.drawImage(playerDown[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+                //desenhar arma para esquerda
+                if (arma) {
+                    g.drawImage(Entity.arma_left, this.getX() - Camera.x -8, this.getY() - Camera.y, null);
+                }
+            }
         } else {
             g.drawImage(playerdamage, this.getX() - Camera.x, this.getY() - Camera.y, null);
         }
     }
-
 }
