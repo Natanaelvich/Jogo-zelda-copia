@@ -45,10 +45,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     public static Random rand;
     public static UI ui;
     private int cur_level = 1, max_level = 2;
-    public static String gameStat = "normal";
+    public static String gameStat = "Menu";
     private boolean showMensageGameOver = true;
     private int framesGameOver = 0;
     private boolean restartGame = false;
+    public Menu menu;
 
     public Game() {
         rand = new Random();
@@ -62,10 +63,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         entitys = new ArrayList<Entity>();
         inimigos = new ArrayList<Inimigo>();
         atirar = new ArrayList<Atirar>();
+        
         spritesheet = new Spritesheet("/spritesheet.png");
         player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
         entitys.add(player);
         world = new World("/level1.png");
+        menu  = new Menu();
     }
 
     //janela grfica
@@ -97,7 +100,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     }
 
     public void tick() {
-        if (gameStat == "normal") {
+        if (gameStat == "Normal") {
             this.restartGame = false;
             for (int i = 0; i < entitys.size(); i++) {
                 Entity e = entitys.get(i);
@@ -130,11 +133,14 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         }
         if (restartGame) {
             this.restartGame = false;
-            this.gameStat = "normal";
+            this.gameStat = "Normal";
             cur_level = 1;
             //reiniciando o game
             String newWorld = "level" + cur_level + ".png";
             World.restartGame(newWorld);
+        }else if(gameStat=="Menu"){
+            menu.tick();
+        
         }
     }
     //rederizar
@@ -178,6 +184,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             if (showMensageGameOver) {
                 g.drawString(">pressione ENTER para reiniciar", 220, 210);
             }
+            }else if(gameStat == "Menu"){
+            menu.render(g);
         }
         bs.show();
     }
@@ -251,9 +259,15 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         //movendo para cima e para baixo
         if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
             player.up = true;
+                if(gameStat=="Menu"){
+            menu.up = true;
+            }
 
         } else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
             player.down = true;
+            if(gameStat=="Menu"){
+            menu.down= true;
+            }
 
         }
         if (ke.getKeyCode() == KeyEvent.VK_E) {
