@@ -22,7 +22,7 @@ public class Atirar extends Entity {
     @Override
     public void tick() {
         x += dir_x * spd;
-        y += dir_y * spd;
+        y += dir_y ;
         currLife++;
         if (currLife == life) {
             Game.atirar.remove(this);

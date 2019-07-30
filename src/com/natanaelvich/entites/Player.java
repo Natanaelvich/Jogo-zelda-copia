@@ -104,14 +104,26 @@ public class Player extends Entity {
                 int px = 0;
                 int py = 5;
                 int dx = 0;
+                 int dy = 0;
                 if (dir == dir_right) {
                     px = 18;
                     dx = 1;
-                } else {
+                   dy = 0;
+                } else if (dir == dir_left) {
                     px = -8;
                     dx = -1;
+                 dy = 0;
+                } else if (dir == dir_up) {
+                    px = 18;
+                    dx = 1;
+                    dy = 8;
+                } else if (dir == dir_down) {
+                    px = -8;
+                    dx = -1;
+                    dy = -8;
+                 
                 }
-                Atirar atirarbalas = new Atirar(this.getX() + px, this.getY() + py, 3, 3, null, dx, 0);
+                Atirar atirarbalas = new Atirar(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy);
                 Game.atirar.add(atirarbalas);
             }
         }
@@ -220,7 +232,7 @@ public class Player extends Entity {
                 g.drawImage(playerDown[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
                 //desenhar arma para esquerda
                 if (arma) {
-                    g.drawImage(Entity.arma_left, this.getX() - Camera.x -8, this.getY() - Camera.y, null);
+                    g.drawImage(Entity.arma_left, this.getX() - Camera.x - 8, this.getY() - Camera.y, null);
                 }
             }
         } else {
