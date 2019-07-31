@@ -227,37 +227,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     @Override
     public void keyTyped(KeyEvent ke) {
-        /*
-        //movendo para os ladoas
-        if (ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D) {
-            player.right = true;
 
-        } else if (ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_A) {
-            player.left = true;
-        }
-        //movendo para cima e para baixo
-        if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
-            player.up = true;
-            if (gameStat == "Menu") {
-                menu.up = true;
-            }
-
-        } else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
-            player.down = true;
-            if (gameStat == "Menu") {
-                menu.down = true;
-            }
-        }
-        if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.restartGame = true;
-            if (gameStat == "Menu") {
-                menu.enter = true;
-            }
-        }
-        if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            gameStat = "Menu";
-            menu.pause = true;
-        }*/
     }
 
     @Override

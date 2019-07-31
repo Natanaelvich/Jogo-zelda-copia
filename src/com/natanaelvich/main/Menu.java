@@ -3,13 +3,38 @@ package com.natanaelvich.main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Menu {
 
     public String[] options = {"novo jogo", "carregar jogo", "sair"};
     public int currentOptions = 0, maxCurrentOpt = options.length - 1;
-    public boolean up, down, enter ;
-    public boolean  pause = false;
+    public boolean up, down, enter;
+    public boolean pause = false;
+
+    public static void save(String[] val1, int[] val2, int encode) {
+        BufferedWriter write = null;
+        try {
+            write = new BufferedWriter(new FileWriter("save.txt"));
+        } catch (IOException e) {
+        }
+        for (int i = 0; i < val2.length; i++) {
+            String current = val1[i];
+            current += ":";
+            char[] value = Integer.toString(val2[i]).toCharArray();
+            for (int j = 0; j < value.length; j++) {
+                value[j] += encode;
+                current += value[j];
+            }
+            try {
+                write.write(current);
+                write.close();
+            } catch (IOException e) {
+            }
+        }
+    }
 
     public void tick() {
         if (up) {
@@ -28,12 +53,12 @@ public class Menu {
         }
         if (enter) {
             enter = false;
-            if (options[currentOptions] == "novo jogo" || options[currentOptions]=="continuar") {
+            if (options[currentOptions] == "novo jogo" || options[currentOptions] == "continuar") {
                 System.out.println("enter");
                 Game.gameStat = "Normal";
                 pause = false;
-            }else if (options[currentOptions] == "sair" ) {
-               System.exit(1);
+            } else if (options[currentOptions] == "sair") {
+                System.exit(1);
             }
         }
     }
@@ -47,10 +72,11 @@ public class Menu {
         //opçoes menu
         g.setColor(Color.white);
         g.setFont(new Font("arial", Font.BOLD, 30));
-        if(pause == false)
-        g.drawString("Novo Jogo", Game.w * Game.scale / 2 - 90, Game.h * Game.scale / 2 - 60);
-        else
-        g.drawString("Continuar", Game.w * Game.scale / 2 - 90, Game.h * Game.scale / 2 - 60);
+        if (pause == false) {
+            g.drawString("Novo Jogo", Game.w * Game.scale / 2 - 90, Game.h * Game.scale / 2 - 60);
+        } else {
+            g.drawString("Continuar", Game.w * Game.scale / 2 - 90, Game.h * Game.scale / 2 - 60);
+        }
         g.drawString("Carregar Jogo", Game.w * Game.scale / 2 - 90, Game.h * Game.scale / 2 - 30);
         g.drawString("Sair", Game.w * Game.scale / 2 - 90, Game.h * Game.scale / 2);
 
