@@ -1,6 +1,7 @@
 package com.natanaelvich.entites;
 
 import com.natanaelvich.main.Game;
+import com.natanaelvich.main.Sound;
 import com.natanaelvich.wolrd.Camera;
 import com.natanaelvich.wolrd.World;
 import java.awt.Graphics;
@@ -40,6 +41,7 @@ public class Inimigo extends Entity {
         } else {
             //colidindo com player
             if (Game.rand.nextInt(100) < 10) {
+                Sound.hurt.play();
                 Game.player.life--;
                 Game.player.isdamage = true;
                 System.out.println("vida: " + Game.player.life);
