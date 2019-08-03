@@ -27,24 +27,26 @@ public class Inimigo extends Entity {
 
     @Override
     public void tick() {
-        if (isColiddingPlayer() == false) {
-            if ((int) x < Game.player.getX() && World.isFree((int) (x + speed), this.getY()) && !isColidding((int) (x + speed), this.getY())) {
-                x += speed;
-            } else if ((int) x > Game.player.getX() && World.isFree((int) (x - speed), this.getY()) && !isColidding((int) (x - speed), this.getY())) {
-                x -= speed;
-            }
-            if ((int) y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed)) && !isColidding(this.getX(), (int) (y + speed))) {
-                y += speed;
-            } else if ((int) y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed)) && !isColidding(this.getX(), (int) (y - speed))) {
-                y -= speed;
-            }
-        } else {
-            //colidindo com player
-            if (Game.rand.nextInt(100) < 10) {
-                Sound.hurt.play();
-                Game.player.life--;
-                Game.player.isdamage = true;
-                System.out.println("vida: " + Game.player.life);
+        if (this.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) < 60) {
+            if (isColiddingPlayer() == false) {
+                if ((int) x < Game.player.getX() && World.isFree((int) (x + speed), this.getY()) && !isColidding((int) (x + speed), this.getY())) {
+                    x += speed;
+                } else if ((int) x > Game.player.getX() && World.isFree((int) (x - speed), this.getY()) && !isColidding((int) (x - speed), this.getY())) {
+                    x -= speed;
+                }
+                if ((int) y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed)) && !isColidding(this.getX(), (int) (y + speed))) {
+                    y += speed;
+                } else if ((int) y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed)) && !isColidding(this.getX(), (int) (y - speed))) {
+                    y -= speed;
+                }
+            } else {
+                //colidindo com player
+                if (Game.rand.nextInt(100) < 10) {
+                    Sound.hurt.play();
+                    Game.player.life--;
+                    Game.player.isdamage = true;
+                    System.out.println("vida: " + Game.player.life);
+                }
             }
         }
         frames++;
