@@ -63,10 +63,14 @@ public class Menu {
                     Game.gameStat = "Normal";
                     pause = false;
                     break;
+                case "vida":
+                    Game.player.life = Double.parseDouble(spl2[1]);
+                    break;
             }
         }
     }
 
+    //metodo para salvar o game
     public static void save(String[] val1, int[] val2, int encode) {
         BufferedWriter write = null;
         try {
@@ -89,11 +93,11 @@ public class Menu {
                 }
             } catch (IOException e) {
             }
-            try {
-                write.flush();
-                write.close();
-            } catch (IOException e) {
-            }
+        }
+        try {
+            write.flush();
+            write.close();
+        } catch (IOException e) {
         }
     }
 
