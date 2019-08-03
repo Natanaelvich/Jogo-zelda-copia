@@ -11,6 +11,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -19,6 +20,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -51,6 +54,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     private boolean restartGame = false;
     public Menu menu;
     public boolean saveGame = false;
+    //public UI uis;
+    //public InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream("pixelfont.ttf");
+    // public Font newFont;
 
     public Game() {
         Sound.musicBack.loop();
@@ -71,6 +77,13 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         entitys.add(player);
         world = new World("/level1.png");
         menu = new Menu();
+        /* try {
+            newFont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(80f);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }
 
     //janela grfica
@@ -105,8 +118,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         if (gameStat == "Normal") {
             if (this.saveGame) {
                 this.saveGame = false;
-                String[] opt1 = {"level","vida"};
-                int[] opt2 = {this.cur_level,(int)player.life};
+                String[] opt1 = {"level", "vida"};
+                int[] opt2 = {this.cur_level, (int) player.life};
                 Menu.save(opt1, opt2, 10);
                 System.out.println("Salvo");
             }
@@ -180,6 +193,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         g.setFont(new Font("arial", Font.BOLD, 20));
         g.setColor(Color.WHITE);
         g.drawString("Munição: " + player.ammo, 580, 18);
+
         if (gameStat == "GameOver") {
             Graphics2D g2 = (Graphics2D) g;
             g2.setColor(new Color(0, 0, 0, 100));
@@ -195,6 +209,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         } else if (gameStat == "Menu") {
             menu.render(g);
         }
+        /*  g.setFont(newFont);
+        g.setColor(Color.red);
+        g.drawString("Teste", 90, 90);
+         */
         bs.show();
     }
 
