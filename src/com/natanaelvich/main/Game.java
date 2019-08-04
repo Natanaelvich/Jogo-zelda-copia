@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -54,9 +55,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     private boolean restartGame = false;
     public Menu menu;
     public boolean saveGame = false;
-    //public UI uis;
-    //public InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream("pixelfont.ttf");
-    // public Font newFont;
+    public int[] pixels;
 
     public Game() {
         Sound.musicBack.loop();
@@ -68,9 +67,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         //inicializando objetos
         ui = new UI();
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        entitys = new ArrayList<Entity>();
-        inimigos = new ArrayList<Inimigo>();
-        atirar = new ArrayList<Atirar>();
+        pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+        entitys = new ArrayList<>();
+        inimigos = new ArrayList<>();
+        atirar = new ArrayList<>();
 
         spritesheet = new Spritesheet("/spritesheet.png");
         player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
@@ -165,6 +165,19 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         }
     }
     //rederizar
+/*
+    public void drawRectangaleExemple(int xoof, int yoof) {
+        for (int xx = 0; xx < 32; xx++) {
+            for (int yy = 0; yy < 32; yy++) {
+                int xOof = xx + xoof;
+                int yOof = yy + yoof;
+                if (xOof < 0 || yOof < 0 || xOof >= w || yOof >= h) {
+                    continue;
+                }
+                pixels[xOof + (yOof * w)] = 0xff0000;
+            }
+        }
+    }*/
 
     public void render() {
         BufferStrategy bs = this.getBufferStrategy();
