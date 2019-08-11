@@ -104,24 +104,23 @@ public class Player extends Entity {
                 int px = 0;
                 int py = 5;
                 int dx = 0;
-                 int dy = 0;
+                int dy = 0;
                 if (dir == dir_right) {
                     px = 18;
                     dx = 1;
-                   dy = 0;
+                    dy = 0;
                 } else if (dir == dir_left) {
                     px = -8;
                     dx = -1;
-                 dy = 0;
+                    dy = 0;
                 } else if (dir == dir_up) {
-                    px = 18;
-                    dx = 1;
-                    dy = 8;
+                    px = 0;
+                    dx = 0;
+                    dy = -1;
                 } else if (dir == dir_down) {
-                    px = -8;
-                    dx = -1;
-                    dy = -8;
-                 
+                    px = 0;
+                    dx = 0;
+                    dy = 1;
                 }
                 Atirar atirarbalas = new Atirar(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy);
                 Game.atirar.add(atirarbalas);
