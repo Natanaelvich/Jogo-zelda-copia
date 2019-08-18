@@ -18,7 +18,7 @@ public class Player extends Entity {
     private BufferedImage[] playerLeft;
     private BufferedImage[] playerUp;
     private BufferedImage[] playerDown;
-    public double life = 10, maxlife = 100;
+    public double life = 100, maxlife = 100;
     public int ammo = 0;
     private BufferedImage playerdamage;
     public boolean isdamage = false;
@@ -165,6 +165,7 @@ public class Player extends Entity {
             if (atual instanceof Vida) {
                 if (Entity.isColidding(this, atual)) {
                     life += 10;
+                    Game.entitys.remove(atual);
                     if (life > 100) {
                         life = 100;
                         Game.entitys.remove(atual);
@@ -180,7 +181,7 @@ public class Player extends Entity {
             Entity atual = Game.entitys.get(i);
             if (atual instanceof Municao) {
                 if (Entity.isColidding(this, atual)) {
-                    ammo += 100;
+                    ammo += 50;
                     System.out.println("munição atual : " + ammo);
                     Game.entitys.remove(atual);
                 }

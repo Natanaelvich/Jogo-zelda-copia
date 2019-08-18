@@ -43,7 +43,7 @@ public class Inimigo extends Entity {
                 //colidindo com player
                 if (Game.rand.nextInt(100) < 10) {
                     Sound.hurt.play();
-                    Game.player.life--;
+                    Game.player.life-=5;
                     Game.player.isdamage = true;
                     System.out.println("vida: " + Game.player.life);
                 }
@@ -122,8 +122,5 @@ public class Inimigo extends Entity {
         } else {
             g.drawImage(Entity.inimigo_dano, this.getX() - Camera.x, this.getY() - Camera.y, null);
         }
-        //testando mascara de colisao
-        //super.render(g);
-        // g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, maskw, maskh);
     }
 }
